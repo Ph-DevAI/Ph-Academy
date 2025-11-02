@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ph-Academy - Académie en ligne</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #28a745;
+            --primary-black: #000000;
+            --primary-white: #ffffff;
+            --dark-gray: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-black);
+            color: var(--primary-white);
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-green) !important;
+        }
+
+        .nav-link {
+            color: var(--primary-white) !important;
+            margin-right: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-green) !important;
+        }
+
+        .language-switch {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .language-switch:hover {
+            background: #1e7e34;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section with Parallax */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .parallax-layer-1 {
+            transform: translateZ(-10px) scale(1.1);
+        }
+
+        .parallax-layer-2 {
+            transform: translateZ(-20px) scale(1.2);
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--primary-white);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-btn:hover {
+            background: #1e7e34;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(40, 167, 69, 0.6);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--primary-white);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-green);
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-green);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary-green);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .card-title {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .card-btn:hover {
+            background: #1e7e34;
+            transform: scale(1.05);
+        }
+
+        /* Domain Cards */
+        .domain-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(50, 50, 50, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(40, 167, 69, 0.1), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-green);
+        }
+
+        .domain-card:hover::before {
+            left: 100%;
+        }
+
+        .domain-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .domain-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-white);
+        }
+
+        .domain-status {
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background: rgba(40, 167, 69, 0.3);
+            color: var(--primary-green);
+        }
+
+        .status-unavailable {
+            background: rgba(200, 50, 50, 0.3);
+            color: #ff6b6b;
+        }
+
+        .status-coming-soon {
+            background: rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--primary-white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+            color: var(--primary-white);
+        }
+
+        .form-control::placeholder {
+            color: #888888;
+        }
+
+        .form-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-btn:hover {
+            background: #1e7e34;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .footer-link {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-green);
+        }
+
+        /* Swiper Custom */
+        .swiper {
+            padding: 2rem 0;
+        }
+
+        .swiper-button-prev, .swiper-button-next {
+            color: var(--primary-green) !important;
+        }
+
+        .swiper-button-prev:hover, .swiper-button-next:hover {
+            color: #1e7e34 !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .navbar-nav {
+                margin-top: 1rem;
+            }
+            
+            .card {
+                margin: 0.5rem;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .mobile-hide {
+                display: none !important;
+            }
+            
+            .hero-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/120x40/28a745/ffffff?text=Ph-Academy" alt="Ph-Academy Logo" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#formations">Formations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#domains">Autres Domaines PH</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <button class="language-switch" id="langSwitch">FR</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-slide active">
+            <h1 class="hero-title">Éducation Excellence</h1>
+            <p class="hero-subtitle">Découvrez nos formations de qualité supérieure conçues pour vous accompagner vers la réussite académique et professionnelle.</p>
+            <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+        </div>
+        <div class="hero-slide">
+            <h1 class="hero-title">Apprentissage Moderne</h1>
+            <p class="hero-subtitle">Méthodes d'enseignement innovantes combinant technologie et pédagogie traditionnelle pour un apprentissage optimal.</p>
+            <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+        </div>
+        <div class="hero-slide">
+            <h1 class="hero-title">Votre Succès, Notre Mission</h1>
+            <p class="hero-subtitle">Des enseignants expérimentés et passionnés vous guident à chaque étape de votre parcours académique.</p>
+            <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+        </div>
+    </section>
+
+    <!-- Formations Section -->
+    <section id="formations" class="section">
+        <div class="container">
+            <h2 class="section-title">Nos Formations</h2>
+            <div class="swiper formations-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">Préparation Brevet</h3>
+                            <p class="card-text">Programme intensif pour la préparation au brevet des collèges avec suivi personnalisé, exercices pratiques et examens blancs réguliers.</p>
+                            <div class="card-price">Inscription: 4 000 F<br>Mensuel: 30 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">Terminal & Examens Officiels</h3>
+                            <p class="card-text">Cours complets pour les classes de première et terminale, incluant préparation aux examens officiels avec méthodes de travail efficaces.</p>
+                            <div class="card-price">Inscription: 4 000 F<br>Mensuel: 35 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">Prépa Concours</h3>
+                            <p class="card-text">Formation intensive pour les concours d'entrée aux grandes écoles et établissements prestigieux, avec coaching personnalisé.</p>
+                            <div class="card-price">Inscription: 5 000 F<br>Trimestre: 60 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Services Répétitions</h2>
+            <div class="swiper services-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">6ème à 2nde</h3>
+                            <p class="card-text">Renforcement scolaire pour les niveaux fondamentaux avec suivi régulier et méthodes d'apprentissage adaptées.</p>
+                            <div class="card-price">Inscription: 4 000 F<br>Mensuel: 25 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">3ème + Préparation Brevet</h3>
+                            <p class="card-text">Accompagnement spécifique pour la troisième avec préparation intensive au brevet des collèges.</p>
+                            <div class="card-price">Inscription: 4 000 F<br>Mensuel: 30 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">1ère, Terminale + Examens</h3>
+                            <p class="card-text">Soutien scolaire avancé pour les classes terminales avec préparation aux examens officiels.</p>
+                            <div class="card-price">Inscription: 4 000 F<br>Mensuel: 35 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <h3 class="card-title">Prépa Vogt / Concours</h3>
+                            <p class="card-text">Formation intensive pour les concours spécifiques avec programme personnalisé selon les besoins.</p>
+                            <div class="card-price">Inscription: 5 000 F<br>Trimestre: 60 000 F</div>
+                            <a href="#contact" class="card-btn">S'inscrire</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Autres Domaines PH Section -->
+    <section id="domains" class="section">
+        <div class="container">
+            <h2 class="section-title">Autres Domaines PH</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="domain-card">
+                        <div class="domain-icon"><i class="fas fa-brain"></i></div>
+                        <h3 class="domain-title">Ph-DevAI</h3>
+                        <div class="domain-status status-available">Disponible</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="domain-card">
+                        <div class="domain-icon"><i class="fas fa-network-wired"></i></div>
+                        <h3 class="domain-title">Ph-RéseauNet</h3>
+                        <div class="domain-status status-unavailable">Indisponible</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="domain-card">
+                        <div class="domain-icon"><i class="fas fa-language"></i></div>
+                        <h3 class="domain-title">Ph-EchoLang</h3>
+                        <div class="domain-status status-available">Disponible</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="domain-card">
+                        <div class="domain-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="domain-title">Ph-ComMan</h3>
+                        <div class="domain-status status-coming-soon">Pas encore de site web</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="domain-card">
+                        <div class="domain-icon"><i class="fas fa-cogs"></i></div>
+                        <h3 class="domain-title">Ph-Tech</h3>
+                        <div class="domain-status status-unavailable">Indisponible</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="domain-card">
+                        <div class="domain-icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3 class="domain-title">Ph-Health</h3>
+                        <div class="domain-status status-unavailable">Indisponible</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form class="contact-form" id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" id="name" placeholder="Nom complet" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="Adresse email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="message" rows="5" placeholder="Votre message" required></textarea>
+                        </div>
+                        <button type="submit" class="form-btn">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <a href="#" class="footer-link">Nous soutenir</a>
+                <p class="mt-3 mb-0">&copy; 2024 Ph-Academy. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Hero Carousel with Parallax Effect
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const totalSlides = slides.length;
+        let slideInterval;
+
+        function showSlide(slideIndex) {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // Start auto sliding
+        startAutoSlide();
+
+        // Pause auto slide on hover
+        const heroSection = document.querySelector('.hero-section');
+        heroSection.addEventListener('mouseenter', stopAutoSlide);
+        heroSection.addEventListener('mouseleave', startAutoSlide);
+
+        // Initialize Swipers
+        const formationsSwiper = new Swiper('.formations-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1200: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+
+        const servicesSwiper = new Swiper('.services-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1200: {
+                    slidesPerView: 4,
+                }
+            }
+        });
+
+        // Scroll Animation for Sections
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('.section');
+            const windowHeight = window.innerHeight;
+
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        // Debounced scroll function for better performance
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    animateOnScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Trigger once on load
+        window.addEventListener('load', () => {
+            animateOnScroll();
+            
+            // Small delay to ensure everything is loaded
+            setTimeout(() => {
+                document.querySelectorAll('.section').forEach(section => {
+                    if (section.getBoundingClientRect().top < window.innerHeight) {
+                        section.classList.add('visible');
+                    }
+                });
+            }, 100);
+        });
+
+        // Language Switch Translation System
+        const translations = {
+            fr: {
+                home: 'Accueil',
+                formations: 'Formations',
+                services: 'Services',
+                domains: 'Autres Domaines PH',
+                contact: 'Contact',
+                discover: 'Découvrir nos formations',
+                educationExcellence: 'Éducation Excellence',
+                educationExcellenceDesc: 'Découvrez nos formations de qualité supérieure conçues pour vous accompagner vers la réussite académique et professionnelle.',
+                modernLearning: 'Apprentissage Moderne',
+                modernLearningDesc: 'Méthodes d\'enseignement innovantes combinant technologie et pédagogie traditionnelle pour un apprentissage optimal.',
+                successMission: 'Votre Succès, Notre Mission',
+                successMissionDesc: 'Des enseignants expérimentés et passionnés vous guident à chaque étape de votre parcours académique.',
+                ourFormations: 'Nos Formations',
+                ourServices: 'Services Répétitions',
+                otherDomains: 'Autres Domaines PH',
+                contactUs: 'Contactez-nous',
+                fullName: 'Nom complet',
+                email: 'Adresse email',
+                message: 'Votre message',
+                send: 'Envoyer',
+                supportUs: 'Nous soutenir',
+                prepBrevet: 'Préparation Brevet',
+                prepBrevetDesc: 'Programme intensif pour la préparation au brevet des collèges avec suivi personnalisé, exercices pratiques et examens blancs réguliers.',
+                terminalExams: 'Terminal & Examens Officiels',
+                terminalExamsDesc: 'Cours complets pour les classes de première et terminale, incluant préparation aux examens officiels avec méthodes de travail efficaces.',
+                prepConcours: 'Prépa Concours',
+                prepConcoursDesc: 'Formation intensive pour les concours d\'entrée aux grandes écoles et établissements prestigieux, avec coaching personnalisé.',
+                levels6to2: '6ème à 2nde',
+                levels6to2Desc: 'Renforcement scolaire pour les niveaux fondamentaux avec suivi régulier et méthodes d\'apprentissage adaptées.',
+                level3Brevet: '3ème + Préparation Brevet',
+                level3BrevetDesc: 'Accompagnement spécifique pour la troisième avec préparation intensive au brevet des collèges.',
+                level1Terminal: '1ère, Terminale + Examens',
+                level1TerminalDesc: 'Soutien scolaire avancé pour les classes terminales avec préparation aux examens officiels.',
+                prepVogt: 'Prépa Vogt / Concours',
+                prepVogtDesc: 'Formation intensive pour les concours spécifiques avec programme personnalisé selon les besoins.',
+                phdevai: 'Ph-DevAI',
+                phreseaunet: 'Ph-RéseauNet',
+                phecholang: 'Ph-EchoLang',
+                phcomman: 'Ph-ComMan',
+                phtech: 'Ph-Tech',
+                phhealth: 'Ph-Health',
+                available: 'Disponible',
+                unavailable: 'Indisponible',
+                comingSoon: 'Pas encore de site web'
+            },
+            en: {
+                home: 'Home',
+                formations: 'Courses',
+                services: 'Services',
+                domains: 'Other PH Domains',
+                contact: 'Contact',
+                discover: 'Discover our courses',
+                educationExcellence: 'Education Excellence',
+                educationExcellenceDesc: 'Discover our premium quality courses designed to guide you towards academic and professional success.',
+                modernLearning: 'Modern Learning',
+                modernLearningDesc: 'Innovative teaching methods combining technology and traditional pedagogy for optimal learning.',
+                successMission: 'Your Success, Our Mission',
+                successMissionDesc: 'Experienced and passionate teachers guide you every step of your academic journey.',
+                ourFormations: 'Our Courses',
+                ourServices: 'Repetition Services',
+                otherDomains: 'Other PH Domains',
+                contactUs: 'Contact Us',
+                fullName: 'Full Name',
+                email: 'Email Address',
+                message: 'Your Message',
+                send: 'Send',
+                supportUs: 'Support Us',
+                prepBrevet: 'Brevet Preparation',
+                prepBrevetDesc: 'Intensive program for brevet des collèges preparation with personalized follow-up, practical exercises, and regular mock exams.',
+                terminalExams: 'Terminal & Official Exams',
+                terminalExamsDesc: 'Complete courses for first and final years, including official exam preparation with effective study methods.',
+                prepConcours: 'Prep Courses',
+                prepConcoursDesc: 'Intensive training for entrance exams to prestigious schools and institutions, with personalized coaching.',
+                levels6to2: '6th to 2nd Grade',
+                levels6to2Desc: 'Academic reinforcement for fundamental levels with regular follow-up and adapted learning methods.',
+                level3Brevet: '3rd + Brevet Preparation',
+                level3BrevetDesc: 'Specific support for third grade with intensive brevet preparation.',
+                level1Terminal: '1st, Final Year + Exams',
+                level1TerminalDesc: 'Advanced academic support for final years with official exam preparation.',
+                prepVogt: 'Vogt Prep / Competitions',
+                prepVogtDesc: 'Intensive training for specific competitions with personalized programs according to needs.',
+                phdevai: 'Ph-DevAI',
+                phreseaunet: 'Ph-RéseauNet',
+                phecholang: 'Ph-EchoLang',
+                phcomman: 'Ph-ComMan',
+                phtech: 'Ph-Tech',
+                phhealth: 'Ph-Health',
+                available: 'Available',
+                unavailable: 'Unavailable',
+                comingSoon: 'No website yet'
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function updateText() {
+            const t = translations[currentLang];
+            
+            // Update navbar
+            document.querySelectorAll('.nav-link')[0].textContent = t.home;
+            document.querySelectorAll('.nav-link')[1].textContent = t.formations;
+            document.querySelectorAll('.nav-link')[2].textContent = t.services;
+            document.querySelectorAll('.nav-link')[3].textContent = t.domains;
+            document.querySelectorAll('.nav-link')[4].textContent = t.contact;
+            
+            // Update hero
+            document.querySelector('.hero-btn').textContent = t.discover;
+            document.querySelectorAll('.hero-title')[0].textContent = t.educationExcellence;
+            document.querySelectorAll('.hero-subtitle')[0].textContent = t.educationExcellenceDesc;
+            document.querySelectorAll('.hero-title')[1].textContent = t.modernLearning;
+            document.querySelectorAll('.hero-subtitle')[1].textContent = t.modernLearningDesc;
+            document.querySelectorAll('.hero-title')[2].textContent = t.successMission;
+            document.querySelectorAll('.hero-subtitle')[2].textContent = t.successMissionDesc;
+            
+            // Update section titles
+            document.querySelectorAll('.section-title')[0].textContent = t.ourFormations;
+            document.querySelectorAll('.section-title')[1].textContent = t.ourServices;
+            document.querySelectorAll('.section-title')[2].textContent = t.otherDomains;
+            document.querySelectorAll('.section-title')[3].textContent = t.contactUs;
+            
+            // Update contact form placeholders
+            document.getElementById('name').placeholder = t.fullName;
+            document.getElementById('email').placeholder = t.email;
+            document.getElementById('message').placeholder = t.message;
+            document.querySelector('.form-btn').textContent = t.send;
+            
+            // Update footer
+            document.querySelector('.footer-link').textContent = t.supportUs;
+            
+            // Update lang button
+            langSwitch.textContent = currentLang === 'fr' ? 'EN' : 'FR';
+            
+            // Update card content
+            const cards = document.querySelectorAll('.card');
+            if (cards.length >= 3) {
+                // Formations cards
+                cards[0].querySelector('.card-title').textContent = t.prepBrevet;
+                cards[0].querySelector('.card-text').textContent = t.prepBrevetDesc;
+                cards[1].querySelector('.card-title').textContent = t.terminalExams;
+                cards[1].querySelector('.card-text').textContent = t.terminalExamsDesc;
+                cards[2].querySelector('.card-title').textContent = t.prepConcours;
+                cards[2].querySelector('.card-text').textContent = t.prepConcoursDesc;
+            }
+            
+            if (cards.length >= 7) {
+                // Services cards
+                cards[3].querySelector('.card-title').textContent = t.levels6to2;
+                cards[3].querySelector('.card-text').textContent = t.levels6to2Desc;
+                cards[4].querySelector('.card-title').textContent = t.level3Brevet;
+                cards[4].querySelector('.card-text').textContent = t.level3BrevetDesc;
+                cards[5].querySelector('.card-title').textContent = t.level1Terminal;
+                cards[5].querySelector('.card-text').textContent = t.level1TerminalDesc;
+                cards[6].querySelector('.card-title').textContent = t.prepVogt;
+                cards[6].querySelector('.card-text').textContent = t.prepVogtDesc;
+            }
+            
+            // Update domain cards
+            const domainCards = document.querySelectorAll('.domain-card');
+            if (domainCards.length >= 6) {
+                domainCards[0].querySelector('.domain-title').textContent = t.phdevai;
+                domainCards[0].querySelector('.domain-status').textContent = t.available;
+                domainCards[0].querySelector('.domain-status').className = 'domain-status status-available';
+                
+                domainCards[1].querySelector('.domain-title').textContent = t.phreseaunet;
+                domainCards[1].querySelector('.domain-status').textContent = t.unavailable;
+                domainCards[1].querySelector('.domain-status').className = 'domain-status status-unavailable';
+                
+                domainCards[2].querySelector('.domain-title').textContent = t.phecholang;
+                domainCards[2].querySelector('.domain-status').textContent = t.available;
+                domainCards[2].querySelector('.domain-status').className = 'domain-status status-available';
+                
+                domainCards[3].querySelector('.domain-title').textContent = t.phcomman;
+                domainCards[3].querySelector('.domain-status').textContent = t.comingSoon;
+                domainCards[3].querySelector('.domain-status').className = 'domain-status status-coming-soon';
+                
+                domainCards[4].querySelector('.domain-title').textContent = t.phtech;
+                domainCards[4].querySelector('.domain-status').textContent = t.unavailable;
+                domainCards[4].querySelector('.domain-status').className = 'domain-status status-unavailable';
+                
+                domainCards[5].querySelector('.domain-title').textContent = t.phhealth;
+                domainCards[5].querySelector('.domain-status').textContent = t.unavailable;
+                domainCards[5].querySelector('.domain-status').className = 'domain-status status-unavailable';
+            }
+        }
+
+        const langSwitch = document.getElementById('langSwitch');
+        langSwitch.addEventListener('click', () => {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            updateText();
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const successMessage = currentLang === 'fr' 
+                ? 'Merci pour votre message! Nous vous répondrons bientôt.' 
+                : 'Thank you for your message! We will get back to you soon.';
+            alert(successMessage);
+            this.reset();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
