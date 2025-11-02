@@ -7,516 +7,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-green: #28a745;
-            --primary-black: #000000;
-            --primary-white: #ffffff;
-            --dark-gray: #333333;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(40, 167, 69, 0.3);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary-green) !important;
-        }
-
-        .nav-link {
-            color: var(--primary-white) !important;
-            margin-right: 1.5rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-green) !important;
-        }
-
-        .language-switch {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .language-switch:hover {
-            background: #1e7e34;
-            transform: scale(1.05);
-        }
-
-        /* Hero Section with Parallax Swiper and Background Images */
-        .hero-section {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .parallax-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .parallax-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .parallax-layer-1 {
-            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
-            opacity: 0.4;
-            transform: translateZ(-2px) scale(1.1);
-        }
-
-        .parallax-layer-2 {
-            background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
-            opacity: 0.3;
-            transform: translateZ(-4px) scale(1.2);
-        }
-
-        .hero-swiper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-        }
-
-        .hero-slide {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(40, 167, 69, 0.3);
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: var(--primary-white);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-
-        .hero-btn {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
-        }
-
-        .hero-btn:hover {
-            background: #1e7e34;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(40, 167, 69, 0.6);
-        }
-
-        /* Swiper Pagination */
-        .swiper-pagination {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-        }
-
-        .swiper-pagination-bullet {
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 1;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .swiper-pagination-bullet-active {
-            background: var(--primary-green);
-            width: 20px;
-            border-radius: 10px;
-        }
-
-        /* Sections */
-        .section {
-            padding: 6rem 0;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: var(--primary-white);
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--primary-green);
-            border-radius: 2px;
-        }
-
-        /* Cards */
-        .card {
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--primary-green);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-color: var(--primary-green);
-        }
-
-        .card:hover::before {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        .card-title {
-            color: var(--primary-green);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .card-text {
-            color: #cccccc;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            margin-bottom: 1.5rem;
-        }
-
-        .card-btn {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .card-btn:hover {
-            background: #1e7e34;
-            transform: scale(1.05);
-        }
-
-        /* Domain Cards */
-        .domain-card {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(50, 50, 50, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .domain-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(40, 167, 69, 0.1), transparent);
-            transition: all 0.6s ease;
-        }
-
-        .domain-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: var(--primary-green);
-        }
-
-        .domain-card:hover::before {
-            left: 100%;
-        }
-
-        .domain-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-green);
-        }
-
-        .domain-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--primary-white);
-        }
-
-        .domain-status {
-            font-size: 0.9rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-weight: 600;
-        }
-
-        .status-available {
-            background: rgba(40, 167, 69, 0.3);
-            color: var(--primary-green);
-        }
-
-        .status-unavailable {
-            background: rgba(200, 50, 50, 0.3);
-            color: #ff6b6b;
-        }
-
-        .status-coming-soon {
-            background: rgba(255, 193, 7, 0.3);
-            color: #ffc107;
-        }
-
-        /* Contact Form */
-        .contact-form {
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 2.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .form-control {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--primary-white);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            background: rgba(0, 0, 0, 0.4);
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
-            color: var(--primary-white);
-        }
-
-        .form-control::placeholder {
-            color: #888888;
-        }
-
-        .form-btn {
-            background: var(--primary-green);
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .form-btn:hover {
-            background: #1e7e34;
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark-gray);
-            padding: 3rem 0;
-            border-top: 1px solid rgba(40, 167, 69, 0.3);
-        }
-
-        .footer-link {
-            color: var(--primary-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: var(--primary-green);
-        }
-
-        /* Swiper Custom */
-        .swiper {
-            padding: 2rem 0;
-        }
-
-        .swiper-button-prev, .swiper-button-next {
-            color: var(--primary-green) !important;
-        }
-
-        .swiper-button-prev:hover, .swiper-button-next:hover {
-            color: #1e7e34 !important;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .section {
-                padding: 4rem 0;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .navbar-nav {
-                margin-top: 1rem;
-            }
-            
-            .card {
-                margin: 0.5rem;
-                padding: 1.5rem;
-            }
-            
-            .hero-content {
-                padding: 1.5rem;
-                margin: 0 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-title {
-                font-size: 1.8rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-            
-            .mobile-hide {
-                display: none !important;
-            }
-            
-            .hero-btn {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .hero-content {
-                margin: 0 0.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
+     <!-- Sticky Contact Buttons -->
+    <div class="sticky-contact">
+        <a href="https://wa.me/656531102" class="contact-btn whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://facebook.com/kapseu.ph" class="contact-btn facebook-btn" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/prince_hilquia" class="contact-btn instagram-btn" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="https://placehold.co/120x40/28a745/ffffff?text=Ph-Academy" alt="Ph-Academy Logo" class="img-fluid">
+                <img src="logo.png"  style="width: 100px; height: 100px;" alt="Ph-Academy Logo" class="img-fluid">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -584,9 +95,10 @@
         </div>
     </section>
 
-    <!-- Formations Section -->
+    <!-- Formations Section with Parallax Background -->
     <section id="formations" class="section">
-        <div class="container">
+        <div class="parallax-section-bg"></div>
+        <div class="container section-content">
             <h2 class="section-title">Nos Formations</h2>
             <div class="swiper formations-swiper">
                 <div class="swiper-wrapper">
@@ -621,9 +133,10 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section with Parallax Background -->
     <section id="services" class="section">
-        <div class="container">
+        <div class="parallax-section-bg"></div>
+        <div class="container section-content">
             <h2 class="section-title">Services Répétitions</h2>
             <div class="swiper services-swiper">
                 <div class="swiper-wrapper">
@@ -666,17 +179,20 @@
         </div>
     </section>
 
-    <!-- Autres Domaines PH Section -->
+    <!-- Autres Domaines PH Section with Parallax Background -->
     <section id="domains" class="section">
-        <div class="container">
+        <div class="parallax-section-bg"></div>
+        <div class="container section-content">
             <h2 class="section-title">Autres Domaines PH</h2>
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="domain-card">
-                        <div class="domain-icon"><i class="fas fa-brain"></i></div>
-                        <h3 class="domain-title">Ph-DevAI</h3>
-                        <div class="domain-status status-available">Disponible</div>
-                    </div>
+                    <a href="https://ph-devai.onrender.com" style="text-decoration: none; color: white;">
+                        <div class="domain-card">
+                            <div class="domain-icon"><i class="fas fa-brain"></i></div>
+                            <h3 class="domain-title">Ph-DevAI</h3>
+                            <div class="domain-status status-available">Disponible</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="domain-card">
@@ -686,11 +202,13 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="domain-card">
-                        <div class="domain-icon"><i class="fas fa-language"></i></div>
-                        <h3 class="domain-title">Ph-EchoLang</h3>
-                        <div class="domain-status status-available">Disponible</div>
-                    </div>
+                    <a href="https://ph-echolang.onrender.com" style="text-decoration: none; color: white;">
+                        <div class="domain-card">
+                            <div class="domain-icon"><i class="fas fa-language"></i></div>
+                            <h3 class="domain-title">Ph-EchoLang</h3>
+                            <div class="domain-status status-available">Disponible</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="domain-card">
@@ -717,388 +235,118 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <div class="container">
-            <h2 class="section-title">Contactez-nous</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <form class="contact-form" id="contactForm">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <input type="text" class="form-control" id="name" placeholder="Nom complet" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <input type="email" class="form-control" id="email" placeholder="Adresse email" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" id="message" rows="5" placeholder="Votre message" required></textarea>
-                        </div>
-                        <button type="submit" class="form-btn">Envoyer</button>
-                    </form>
-                </div>
+     <!-- CONTACT -->
+  <section id="contact" class="parallax-section">
+    <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80"></div>
+    <div class="parallax-overlay"></div>
+    <div class="parallax-inner container">
+      <h2 class="section-title text-center mb-3" data-i18n="contact_title">Contact</h2>
+      <p class="text-center muted mb-4" data-i18n="contact_sub">Parlez-nous de votre projet — nous répondrons rapidement.</p>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <form   
+          action="https://formspree.io/f/mrboydpp"
+          method="POST" 
+          class="card-dark p-4" 
+          id="contactForm"
+          style="background: linear-gradient(180deg, aliceblue, blue)"
+          >
+            <div class="row g-3">
+              <div class="col-md-6"><input class="form-control" type="text" id="name"  name="name" placeholder="Nom" required></div>
+              <div class="col-md-6"><input class="form-control" type="email" id="email" name="email" placeholder="Email" required></div>
+              <div class="col-12"><input class="form-control" id="subject" name="subject" placeholder="Sujet"></div>
+              <div class="col-12"><textarea class="form-control" id="message" rows="5" name="message" placeholder="Message"></textarea></div>
+              <div class="col-12 text-end"><button class="btn btn-neon" type="submit" data-i18n="contact_send" style="color: wheat;">Envoyer</button></div>
             </div>
+          </form>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
+
+    <!-- TESTIMONIALS -->
+  <section id="testimonials" class="parallax-section">
+    <div class="parallax-bg" data-bg="https://images.unsplash.com/photo-1526378720094-3f3f0f9a4f3b?auto=format&fit=crop&w=1920&q=80"></div>
+    <div class="parallax-overlay"></div>
+    <div class="parallax-inner container">
+      <h2 class="section-title text-center mb-3" data-i18n="testimonials_title">Témoignages</h2>
+      <p class="text-center muted mb-4">Ils nous ont fait confiance — retour d'expérience réel.</p>
+
+      <div class="swiper testimonialsSwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="testimonial">
+              <p>Le travail de Ph-DevAI a transformé notre MVP en produit commercialisable. Professionnalisme et rapidité.</p>
+              <div class="author mt-3"><div class="avatar">MD</div><div><strong>Marie D.</strong><div class="muted">Directrice Produit</div></div></div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial">
+              <p>La formation en développement nous a permis de monter en compétences rapidement et d'intégrer l'IA dans nos projets.</p>
+              <div class="author mt-3"><div class="avatar">TK</div><div><strong>Thomas K.</strong><div class="muted">CTO</div></div></div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial">
+              <p>Excellent support et mise en place d'un chatbot qui réduit le temps de réponse client de 60%.</p>
+              <div class="author mt-3"><div class="avatar">SM</div><div><strong>Sophie M.</strong><div class="muted">Responsable Support</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
 
     <!-- Footer -->
-    <footer class="footer">
+  <footer class="footer" id="contact" style="background: linear-gradient(180deg, black, blue); color: white;">
         <div class="container">
-            <div class="text-center">
-                <a href="#" class="footer-link">Nous soutenir</a>
-                <p class="mt-3 mb-0">&copy; 2024 Ph-Academy. Tous droits réservés.</p>
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h3 class="footer-title" id="footer-title">Ph-DevAI</h3>
+                    <p id="footer-desc">Entreprise camerounaise spécialisée dans le developpement Wen et d'IA. Membre du groupe PH.</p>
+                    <div class="mt-3">
+                        <a href="https://facebook.com/kapseu.ph" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://instagram.com/prince_hilquia" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 mb-4 mb-lg-0">
+                    <h3 class="footer-title" id="footer-nav-title">Navigation</h3>
+                    <a href="#home" class="footer-link" id="footer-nav-home">Accueil</a>
+                    <a href="#world" class="footer-link" id="footer-nav-languages">Langues</a>
+                    <a href="#services" class="footer-link" id="footer-nav-services">Services</a>
+                    <a href="#testimonials" class="footer-link" id="footer-nav-testimonials">Témoignages</a>
+                    <a href="#domains" class="footer-link" id="footer-nav-domains">Domaines</a>
+                </div>
+                <div class="col-lg-3 mb-4 mb-lg-0">
+                    <h3 class="footer-title" id="footer-contact-title">Contact</h3>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Yaoundé, Cameroun</p>
+                    <p><i class="fas fa-phone me-2"></i> +237 656 531 102</p>
+                    <p><i class="fas fa-envelope me-2"></i> princehilquia79@gmail.com</p>
+                </div>
+                <div class="col-lg-3">
+                    <h3 class="footer-title" id="footer-newsletter-title">Newsletter</h3>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Votre email">
+                        <button class="btn btn-light" type="button" id="newsletter-btn">S'abonner</button>
+                    </div>
+                    <p id="newsletter-text">Restez informé de nos nouveautés et offres spéciales.</p>
+                </div>
+            </div>
+            <p class="mb-5 muted text-center" style="color: gold;">la satisfaction de nos clients est le reflet de notre intelligence</p>
+            <center><img src="logo.png" alt="logo-Ph-DevAI" style="width: 200px; height: 200px;">
+            <div class="copyright">
+                <p id="copyright-text">&copy; 2025 Ph-DevAI - Tous droits réservés. Membre du groupe PH.</p>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Hero Swiper with Parallax and Autoplay
-        const heroSwiper = new Swiper('.hero-swiper', {
-            loop: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            }
-        });
-
-        // Initialize Formations Swiper with Autoplay
-        const formationsSwiper = new Swiper('.formations-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                768: {
-                    slidesPerView: 2,
-                },
-                1200: {
-                    slidesPerView: 3,
-                }
-            }
-        });
-
-        // Initialize Services Swiper with Autoplay
-        const servicesSwiper = new Swiper('.services-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            autoplay: {
-                delay: 4500,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                768: {
-                    slidesPerView: 2,
-                },
-                1200: {
-                    slidesPerView: 4,
-                }
-            }
-        });
-
-        // Scroll Animation for Sections
-        function animateOnScroll() {
-            const sections = document.querySelectorAll('.section');
-            const windowHeight = window.innerHeight;
-
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                if (sectionTop < windowHeight - 100) {
-                    section.classList.add('visible');
-                }
-            });
-        }
-
-        // Debounced scroll function for better performance
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    animateOnScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-
-        // Trigger once on load
-        window.addEventListener('load', () => {
-            animateOnScroll();
-            
-            // Small delay to ensure everything is loaded
-            setTimeout(() => {
-                document.querySelectorAll('.section').forEach(section => {
-                    if (section.getBoundingClientRect().top < window.innerHeight) {
-                        section.classList.add('visible');
-                    }
-                });
-            }, 100);
-        });
-
-        // Language Switch Translation System
-        const translations = {
-            fr: {
-                home: 'Accueil',
-                formations: 'Formations',
-                services: 'Services',
-                domains: 'Autres Domaines PH',
-                contact: 'Contact',
-                discover: 'Découvrir nos formations',
-                educationExcellence: 'Éducation Excellence',
-                educationExcellenceDesc: 'Découvrez nos formations de qualité supérieure conçues pour vous accompagner vers la réussite académique et professionnelle.',
-                modernLearning: 'Apprentissage Moderne',
-                modernLearningDesc: 'Méthodes d\'enseignement innovantes combinant technologie et pédagogie traditionnelle pour un apprentissage optimal.',
-                successMission: 'Votre Succès, Notre Mission',
-                successMissionDesc: 'Des enseignants expérimentés et passionnés vous guident à chaque étape de votre parcours académique.',
-                innovationPedagogique: 'Innovation Pédagogique',
-                innovationPedagogiqueDesc: 'Des programmes personnalisés qui s\'adaptent à votre rythme et vos objectifs d\'apprentissage.',
-                communauteApprentissage: 'Communauté d\'Apprentissage',
-                communauteApprentissageDesc: 'Rejoignez une communauté dynamique d\'apprenants motivés et soutenus par des experts.',
-                ourFormations: 'Nos Formations',
-                ourServices: 'Services Répétitions',
-                otherDomains: 'Autres Domaines PH',
-                contactUs: 'Contactez-nous',
-                fullName: 'Nom complet',
-                email: 'Adresse email',
-                message: 'Votre message',
-                send: 'Envoyer',
-                supportUs: 'Nous soutenir',
-                prepBrevet: 'Préparation Brevet',
-                prepBrevetDesc: 'Programme intensif pour la préparation au brevet des collèges avec suivi personnalisé, exercices pratiques et examens blancs réguliers.',
-                terminalExams: 'Terminal & Examens Officiels',
-                terminalExamsDesc: 'Cours complets pour les classes de première et terminale, incluant préparation aux examens officiels avec méthodes de travail efficaces.',
-                prepConcours: 'Prépa Concours',
-                prepConcoursDesc: 'Formation intensive pour les concours d\'entrée aux grandes écoles et établissements prestigieux, avec coaching personnalisé.',
-                levels6to2: '6ème à 2nde',
-                levels6to2Desc: 'Renforcement scolaire pour les niveaux fondamentaux avec suivi régulier et méthodes d\'apprentissage adaptées.',
-                level3Brevet: '3ème + Préparation Brevet',
-                level3BrevetDesc: 'Accompagnement spécifique pour la troisième avec préparation intensive au brevet des collèges.',
-                level1Terminal: '1ère, Terminale + Examens',
-                level1TerminalDesc: 'Soutien scolaire avancé pour les classes terminales avec préparation aux examens officiels.',
-                prepVogt: 'Prépa Vogt / Concours',
-                prepVogtDesc: 'Formation intensive pour les concours spécifiques avec programme personnalisé selon les besoins.',
-                phdevai: 'Ph-DevAI',
-                phreseaunet: 'Ph-RéseauNet',
-                phecholang: 'Ph-EchoLang',
-                phcomman: 'Ph-ComMan',
-                phtech: 'Ph-Tech',
-                phhealth: 'Ph-Health',
-                available: 'Disponible',
-                unavailable: 'Indisponible',
-                comingSoon: 'Pas encore de site web'
-            },
-            en: {
-                home: 'Home',
-                formations: 'Courses',
-                services: 'Services',
-                domains: 'Other PH Domains',
-                contact: 'Contact',
-                discover: 'Discover our courses',
-                educationExcellence: 'Education Excellence',
-                educationExcellenceDesc: 'Discover our premium quality courses designed to guide you towards academic and professional success.',
-                modernLearning: 'Modern Learning',
-                modernLearningDesc: 'Innovative teaching methods combining technology and traditional pedagogy for optimal learning.',
-                successMission: 'Your Success, Our Mission',
-                successMissionDesc: 'Experienced and passionate teachers guide you every step of your academic journey.',
-                innovationPedagogique: 'Pedagogical Innovation',
-                innovationPedagogiqueDesc: 'Personalized programs that adapt to your pace and learning objectives.',
-                communauteApprentissage: 'Learning Community',
-                communauteApprentissageDesc: 'Join a dynamic community of motivated learners supported by experts.',
-                ourFormations: 'Our Courses',
-                ourServices: 'Repetition Services',
-                otherDomains: 'Other PH Domains',
-                contactUs: 'Contact Us',
-                fullName: 'Full Name',
-                email: 'Email Address',
-                message: 'Your Message',
-                send: 'Send',
-                supportUs: 'Support Us',
-                prepBrevet: 'Brevet Preparation',
-                prepBrevetDesc: 'Intensive program for brevet des collèges preparation with personalized follow-up, practical exercises, and regular mock exams.',
-                terminalExams: 'Terminal & Official Exams',
-                terminalExamsDesc: 'Complete courses for first and final years, including official exam preparation with effective study methods.',
-                prepConcours: 'Prep Courses',
-                prepConcoursDesc: 'Intensive training for entrance exams to prestigious schools and institutions, with personalized coaching.',
-                levels6to2: '6th to 2nd Grade',
-                levels6to2Desc: 'Academic reinforcement for fundamental levels with regular follow-up and adapted learning methods.',
-                level3Brevet: '3rd + Brevet Preparation',
-                level3BrevetDesc: 'Specific support for third grade with intensive brevet preparation.',
-                level1Terminal: '1st, Final Year + Exams',
-                level1TerminalDesc: 'Advanced academic support for final years with official exam preparation.',
-                prepVogt: 'Vogt Prep / Competitions',
-                prepVogtDesc: 'Intensive training for specific competitions with personalized programs according to needs.',
-                phdevai: 'Ph-DevAI',
-                phreseaunet: 'Ph-RéseauNet',
-                phecholang: 'Ph-EchoLang',
-                phcomman: 'Ph-ComMan',
-                phtech: 'Ph-Tech',
-                phhealth: 'Ph-Health',
-                available: 'Available',
-                unavailable: 'Unavailable',
-                comingSoon: 'No website yet'
-            }
-        };
-
-        let currentLang = 'fr';
-
-        function updateText() {
-            const t = translations[currentLang];
-            
-            // Update navbar
-            document.querySelectorAll('.nav-link')[0].textContent = t.home;
-            document.querySelectorAll('.nav-link')[1].textContent = t.formations;
-            document.querySelectorAll('.nav-link')[2].textContent = t.services;
-            document.querySelectorAll('.nav-link')[3].textContent = t.domains;
-            document.querySelectorAll('.nav-link')[4].textContent = t.contact;
-            
-            // Update hero slides
-            const heroSlides = document.querySelectorAll('.hero-content');
-            if (heroSlides.length >= 5) {
-                heroSlides[0].querySelector('.hero-title').textContent = t.educationExcellence;
-                heroSlides[0].querySelector('.hero-subtitle').textContent = t.educationExcellenceDesc;
-                
-                heroSlides[1].querySelector('.hero-title').textContent = t.modernLearning;
-                heroSlides[1].querySelector('.hero-subtitle').textContent = t.modernLearningDesc;
-                
-                heroSlides[2].querySelector('.hero-title').textContent = t.successMission;
-                heroSlides[2].querySelector('.hero-subtitle').textContent = t.successMissionDesc;
-                
-                heroSlides[3].querySelector('.hero-title').textContent = t.innovationPedagogique;
-                heroSlides[3].querySelector('.hero-subtitle').textContent = t.innovationPedagogiqueDesc;
-                
-                heroSlides[4].querySelector('.hero-title').textContent = t.communauteApprentissage;
-                heroSlides[4].querySelector('.hero-subtitle').textContent = t.communauteApprentissageDesc;
-            }
-            
-            // Update hero button text
-            document.querySelectorAll('.hero-btn').forEach(btn => {
-                btn.textContent = t.discover;
-            });
-            
-            // Update section titles
-            document.querySelectorAll('.section-title')[0].textContent = t.ourFormations;
-            document.querySelectorAll('.section-title')[1].textContent = t.ourServices;
-            document.querySelectorAll('.section-title')[2].textContent = t.otherDomains;
-            document.querySelectorAll('.section-title')[3].textContent = t.contactUs;
-            
-            // Update contact form placeholders
-            document.getElementById('name').placeholder = t.fullName;
-            document.getElementById('email').placeholder = t.email;
-            document.getElementById('message').placeholder = t.message;
-            document.querySelector('.form-btn').textContent = t.send;
-            
-            // Update footer
-            document.querySelector('.footer-link').textContent = t.supportUs;
-            
-            // Update lang button
-            langSwitch.textContent = currentLang === 'fr' ? 'EN' : 'FR';
-            
-            // Update card content
-            const cards = document.querySelectorAll('.card');
-            if (cards.length >= 3) {
-                // Formations cards
-                cards[0].querySelector('.card-title').textContent = t.prepBrevet;
-                cards[0].querySelector('.card-text').textContent = t.prepBrevetDesc;
-                cards[1].querySelector('.card-title').textContent = t.terminalExams;
-                cards[1].querySelector('.card-text').textContent = t.terminalExamsDesc;
-                cards[2].querySelector('.card-title').textContent = t.prepConcours;
-                cards[2].querySelector('.card-text').textContent = t.prepConcoursDesc;
-            }
-            
-            if (cards.length >= 7) {
-                // Services cards
-                cards[3].querySelector('.card-title').textContent = t.levels6to2;
-                cards[3].querySelector('.card-text').textContent = t.levels6to2Desc;
-                cards[4].querySelector('.card-title').textContent = t.level3Brevet;
-                cards[4].querySelector('.card-text').textContent = t.level3BrevetDesc;
-                cards[5].querySelector('.card-title').textContent = t.level1Terminal;
-                cards[5].querySelector('.card-text').textContent = t.level1TerminalDesc;
-                cards[6].querySelector('.card-title').textContent = t.prepVogt;
-                cards[6].querySelector('.card-text').textContent = t.prepVogtDesc;
-            }
-            
-            // Update domain cards
-            const domainCards = document.querySelectorAll('.domain-card');
-            if (domainCards.length >= 6) {
-                domainCards[0].querySelector('.domain-title').textContent = t.phdevai;
-                domainCards[0].querySelector('.domain-status').textContent = t.available;
-                domainCards[0].querySelector('.domain-status').className = 'domain-status status-available';
-                
-                domainCards[1].querySelector('.domain-title').textContent = t.phreseaunet;
-                domainCards[1].querySelector('.domain-status').textContent = t.unavailable;
-                domainCards[1].querySelector('.domain-status').className = 'domain-status status-unavailable';
-                
-                domainCards[2].querySelector('.domain-title').textContent = t.phecholang;
-                domainCards[2].querySelector('.domain-status').textContent = t.available;
-                domainCards[2].querySelector('.domain-status').className = 'domain-status status-available';
-                
-                domainCards[3].querySelector('.domain-title').textContent = t.phcomman;
-                domainCards[3].querySelector('.domain-status').textContent = t.comingSoon;
-                domainCards[3].querySelector('.domain-status').className = 'domain-status status-coming-soon';
-                
-                domainCards[4].querySelector('.domain-title').textContent = t.phtech;
-                domainCards[4].querySelector('.domain-status').textContent = t.unavailable;
-                domainCards[4].querySelector('.domain-status').className = 'domain-status status-unavailable';
-                
-                domainCards[5].querySelector('.domain-title').textContent = t.phhealth;
-                domainCards[5].querySelector('.domain-status').textContent = t.unavailable;
-                domainCards[5].querySelector('.domain-status').className = 'domain-status status-unavailable';
-            }
-        }
-
-        const langSwitch = document.getElementById('langSwitch');
-        langSwitch.addEventListener('click', () => {
-            currentLang = currentLang === 'fr' ? 'en' : 'fr';
-            updateText();
-        });
-
-        // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const successMessage = currentLang === 'fr' 
-                ? 'Merci pour votre message! Nous vous répondrons bientôt.' 
-                : 'Thank you for your message! We will get back to you soon.';
-            alert(successMessage);
-            this.reset();
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const target = document.querySelector(targetId);
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
 
