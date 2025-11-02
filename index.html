@@ -69,7 +69,7 @@
             transform: scale(1.05);
         }
 
-        /* Hero Section with Parallax */
+        /* Hero Section with Parallax Swiper and Background Images */
         .hero-section {
             position: relative;
             height: 100vh;
@@ -77,7 +77,15 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            perspective: 1000px;
+        }
+
+        .parallax-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
         .parallax-layer {
@@ -86,40 +94,46 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform-style: preserve-3d;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .parallax-layer-1 {
-            transform: translateZ(-10px) scale(1.1);
+            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            opacity: 0.4;
+            transform: translateZ(-2px) scale(1.1);
         }
 
         .parallax-layer-2 {
-            transform: translateZ(-20px) scale(1.2);
+            background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            opacity: 0.3;
+            transform: translateZ(-4px) scale(1.2);
+        }
+
+        .hero-swiper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
         }
 
         .hero-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease;
         }
 
-        .hero-slide.active {
-            opacity: 1;
-            transform: translateY(0);
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(40, 167, 69, 0.3);
         }
 
         .hero-title {
@@ -128,17 +142,12 @@
             margin-bottom: 1rem;
             color: var(--primary-white);
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 10;
         }
 
         .hero-subtitle {
             font-size: 1.5rem;
             margin-bottom: 2rem;
-            max-width: 800px;
             line-height: 1.6;
-            position: relative;
-            z-index: 10;
         }
 
         .hero-btn {
@@ -152,14 +161,36 @@
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
-            position: relative;
-            z-index: 10;
         }
 
         .hero-btn:hover {
             background: #1e7e34;
             transform: translateY(-3px);
             box-shadow: 0 6px 25px rgba(40, 167, 69, 0.6);
+        }
+
+        /* Swiper Pagination */
+        .swiper-pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
+        .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 1;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--primary-green);
+            width: 20px;
+            border-radius: 10px;
         }
 
         /* Sections */
@@ -445,6 +476,11 @@
                 margin: 0.5rem;
                 padding: 1.5rem;
             }
+            
+            .hero-content {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -467,6 +503,10 @@
             
             .section-title {
                 font-size: 1.8rem;
+            }
+            
+            .hero-content {
+                margin: 0 0.5rem;
             }
         }
     </style>
@@ -496,22 +536,51 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Parallax Swiper and Real Background Images -->
     <section id="home" class="hero-section">
-        <div class="hero-slide active">
-            <h1 class="hero-title">Éducation Excellence</h1>
-            <p class="hero-subtitle">Découvrez nos formations de qualité supérieure conçues pour vous accompagner vers la réussite académique et professionnelle.</p>
-            <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+        <div class="parallax-container">
+            <div class="parallax-layer parallax-layer-1"></div>
+            <div class="parallax-layer parallax-layer-2"></div>
         </div>
-        <div class="hero-slide">
-            <h1 class="hero-title">Apprentissage Moderne</h1>
-            <p class="hero-subtitle">Méthodes d'enseignement innovantes combinant technologie et pédagogie traditionnelle pour un apprentissage optimal.</p>
-            <a href="#formations" class="hero-btn">Découvrir nos formations</a>
-        </div>
-        <div class="hero-slide">
-            <h1 class="hero-title">Votre Succès, Notre Mission</h1>
-            <p class="hero-subtitle">Des enseignants expérimentés et passionnés vous guident à chaque étape de votre parcours académique.</p>
-            <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+        <div class="hero-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Éducation Excellence</h1>
+                        <p class="hero-subtitle">Découvrez nos formations de qualité supérieure conçues pour vous accompagner vers la réussite académique et professionnelle.</p>
+                        <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Apprentissage Moderne</h1>
+                        <p class="hero-subtitle">Méthodes d'enseignement innovantes combinant technologie et pédagogie traditionnelle pour un apprentissage optimal.</p>
+                        <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Votre Succès, Notre Mission</h1>
+                        <p class="hero-subtitle">Des enseignants expérimentés et passionnés vous guident à chaque étape de votre parcours académique.</p>
+                        <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Innovation Pédagogique</h1>
+                        <p class="hero-subtitle">Des programmes personnalisés qui s'adaptent à votre rythme et vos objectifs d'apprentissage.</p>
+                        <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Communauté d'Apprentissage</h1>
+                        <p class="hero-subtitle">Rejoignez une communauté dynamique d'apprenants motivés et soutenus par des experts.</p>
+                        <a href="#formations" class="hero-btn">Découvrir nos formations</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
         </div>
     </section>
 
@@ -686,44 +755,32 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Hero Carousel with Parallax Effect
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.hero-slide');
-        const totalSlides = slides.length;
-        let slideInterval;
+        // Hero Swiper with Parallax and Autoplay
+        const heroSwiper = new Swiper('.hero-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
 
-        function showSlide(slideIndex) {
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('active', index === slideIndex);
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        function startAutoSlide() {
-            slideInterval = setInterval(nextSlide, 5000);
-        }
-
-        function stopAutoSlide() {
-            clearInterval(slideInterval);
-        }
-
-        // Start auto sliding
-        startAutoSlide();
-
-        // Pause auto slide on hover
-        const heroSection = document.querySelector('.hero-section');
-        heroSection.addEventListener('mouseenter', stopAutoSlide);
-        heroSection.addEventListener('mouseleave', startAutoSlide);
-
-        // Initialize Swipers
+        // Initialize Formations Swiper with Autoplay
         const formationsSwiper = new Swiper('.formations-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
@@ -738,10 +795,15 @@
             }
         });
 
+        // Initialize Services Swiper with Autoplay
         const servicesSwiper = new Swiper('.services-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
+            autoplay: {
+                delay: 4500,
+                disableOnInteraction: false,
+            },
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
@@ -810,6 +872,10 @@
                 modernLearningDesc: 'Méthodes d\'enseignement innovantes combinant technologie et pédagogie traditionnelle pour un apprentissage optimal.',
                 successMission: 'Votre Succès, Notre Mission',
                 successMissionDesc: 'Des enseignants expérimentés et passionnés vous guident à chaque étape de votre parcours académique.',
+                innovationPedagogique: 'Innovation Pédagogique',
+                innovationPedagogiqueDesc: 'Des programmes personnalisés qui s\'adaptent à votre rythme et vos objectifs d\'apprentissage.',
+                communauteApprentissage: 'Communauté d\'Apprentissage',
+                communauteApprentissageDesc: 'Rejoignez une communauté dynamique d\'apprenants motivés et soutenus par des experts.',
                 ourFormations: 'Nos Formations',
                 ourServices: 'Services Répétitions',
                 otherDomains: 'Autres Domaines PH',
@@ -856,6 +922,10 @@
                 modernLearningDesc: 'Innovative teaching methods combining technology and traditional pedagogy for optimal learning.',
                 successMission: 'Your Success, Our Mission',
                 successMissionDesc: 'Experienced and passionate teachers guide you every step of your academic journey.',
+                innovationPedagogique: 'Pedagogical Innovation',
+                innovationPedagogiqueDesc: 'Personalized programs that adapt to your pace and learning objectives.',
+                communauteApprentissage: 'Learning Community',
+                communauteApprentissageDesc: 'Join a dynamic community of motivated learners supported by experts.',
                 ourFormations: 'Our Courses',
                 ourServices: 'Repetition Services',
                 otherDomains: 'Other PH Domains',
@@ -903,14 +973,29 @@
             document.querySelectorAll('.nav-link')[3].textContent = t.domains;
             document.querySelectorAll('.nav-link')[4].textContent = t.contact;
             
-            // Update hero
-            document.querySelector('.hero-btn').textContent = t.discover;
-            document.querySelectorAll('.hero-title')[0].textContent = t.educationExcellence;
-            document.querySelectorAll('.hero-subtitle')[0].textContent = t.educationExcellenceDesc;
-            document.querySelectorAll('.hero-title')[1].textContent = t.modernLearning;
-            document.querySelectorAll('.hero-subtitle')[1].textContent = t.modernLearningDesc;
-            document.querySelectorAll('.hero-title')[2].textContent = t.successMission;
-            document.querySelectorAll('.hero-subtitle')[2].textContent = t.successMissionDesc;
+            // Update hero slides
+            const heroSlides = document.querySelectorAll('.hero-content');
+            if (heroSlides.length >= 5) {
+                heroSlides[0].querySelector('.hero-title').textContent = t.educationExcellence;
+                heroSlides[0].querySelector('.hero-subtitle').textContent = t.educationExcellenceDesc;
+                
+                heroSlides[1].querySelector('.hero-title').textContent = t.modernLearning;
+                heroSlides[1].querySelector('.hero-subtitle').textContent = t.modernLearningDesc;
+                
+                heroSlides[2].querySelector('.hero-title').textContent = t.successMission;
+                heroSlides[2].querySelector('.hero-subtitle').textContent = t.successMissionDesc;
+                
+                heroSlides[3].querySelector('.hero-title').textContent = t.innovationPedagogique;
+                heroSlides[3].querySelector('.hero-subtitle').textContent = t.innovationPedagogiqueDesc;
+                
+                heroSlides[4].querySelector('.hero-title').textContent = t.communauteApprentissage;
+                heroSlides[4].querySelector('.hero-subtitle').textContent = t.communauteApprentissageDesc;
+            }
+            
+            // Update hero button text
+            document.querySelectorAll('.hero-btn').forEach(btn => {
+                btn.textContent = t.discover;
+            });
             
             // Update section titles
             document.querySelectorAll('.section-title')[0].textContent = t.ourFormations;
